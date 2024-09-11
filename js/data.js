@@ -1,26 +1,11 @@
-interface JournalEntry {
-  title: string;
-  photoUrl: string;
-  notes: string;
-  entryId: number;
-}
-
-interface Data {
-  view: 'entries' | 'entry-form';
-  entries: JournalEntry[];
-  editing: null | JournalEntry;
-  nextEntryId: number;
-}
-
+'use strict';
 const dataKey = 'code-journal-data';
-
 const data = readData();
-
-function readData(): Data {
-  let data: Data;
+function readData() {
+  let data;
   const localData = localStorage.getItem(dataKey);
   if (localData) {
-    data = JSON.parse(localData) as Data;
+    data = JSON.parse(localData);
   } else {
     data = {
       view: 'entry-form',
@@ -31,8 +16,7 @@ function readData(): Data {
   }
   return data;
 }
-
-function writeData(): void {
+function writeData() {
   const dataJSON = JSON.stringify(data);
   localStorage.setItem(dataKey, dataJSON);
 }

@@ -1,0 +1,129 @@
+body {
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  background-color: #562b81;
+  color: #fff;
+}
+
+nav > span {
+  display: inline-block;
+  padding: 0.5rem 0;
+  margin-right: 1rem;
+}
+
+h1,
+h2 {
+  margin: 0.7rem 0;
+}
+
+h1 {
+  font-family: 'Proza Libre', serif;
+}
+
+img {
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+}
+
+input,
+textarea {
+  width: 100%;
+}
+
+input {
+  height: 30px;
+}
+
+textarea {
+  height: 130px;
+}
+
+button {
+  cursor: pointer;
+  background-color: #562b81;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.3rem 0.7rem;
+  text-transform: uppercase;
+}
+
+.photo-wrapper,
+input,
+textarea {
+  margin-bottom: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #562b81;
+}
+
+p {
+  white-space: pre-wrap;
+}
+
+.entries-wrapper > p {
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.entries-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit {
+  cursor: pointer;
+  float: right;
+}
+
+dialog {
+  border-color: transparent;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-actions button:first-child {
+  color: red;
+  text-decoration: underline;
+  background-color: transparent;
+  padding: 0;
+  text-transform: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.cancel-modal {
+  background-color: grey;
+  color: black;
+}

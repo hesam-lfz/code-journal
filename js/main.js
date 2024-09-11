@@ -1,28 +1,19 @@
-interface FormElements extends HTMLFormControlsCollection {
-  photoUrl: HTMLInputElement;
-  title: HTMLInputElement;
-  notes: HTMLTextAreaElement;
-}
-
-const $formElement = document.querySelector('#entry-form') as HTMLFormElement;
-const $entryImageElement = document.querySelector(
-  '#entry-image',
-) as HTMLImageElement;
+'use strict';
+const $formElement = document.querySelector('#entry-form');
+const $entryImageElement = document.querySelector('#entry-image');
 if ($formElement == null || $entryImageElement == null) throw new Error('Oops');
-const formControls = $formElement.elements as FormElements;
+const formControls = $formElement.elements;
 const $photoUrlElement = formControls.photoUrl;
 const placeholderImageSrc = $entryImageElement.getAttribute('src') || '';
-
-$photoUrlElement.addEventListener('input', (event: Event) => {
-  const photoUrl = (event.target as HTMLInputElement).value;
+$photoUrlElement.addEventListener('input', (event) => {
+  const photoUrl = event.target.value;
   if (photoUrl != null) {
     $entryImageElement.setAttribute('src', photoUrl);
   }
 });
-
-$formElement.addEventListener('submit', (event: Event) => {
+$formElement.addEventListener('submit', (event) => {
   event.preventDefault();
-  const newEntry: JournalEntry = {
+  const newEntry = {
     entryId: data.nextEntryId++,
     title: formControls.title.value,
     photoUrl: formControls.photoUrl.value,

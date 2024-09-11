@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,7 +20,37 @@
       <div class="container"></div>
     </header>
     <main class="container">
-      <div data-view="entry-form"></div>
+      <div data-view="entry-form">
+        <form id="entry-form">
+          <div class="column-full">
+            <h1 class="new-entry-header">New Entry</h1>
+          </div>
+          <div class="row">
+            <div class="photo-wrapper column-half">
+              <img
+                id="entry-image"
+                src="images/placeholder-image-square.jpg"
+                alt="Placeholder image" />
+            </div>
+            <div class="column-half">
+              <label for="title">Title</label>
+              <input id="title" type="text" name="title" required />
+              <label for="photo-url">Photo URL</label>
+              <input id="photo-url" type="url" name="photoUrl" required />
+            </div>
+            <div class="column-full">
+              <label for="notes">Notes</label>
+              <textarea name="notes" id="notes" required></textarea>
+              <div class="form-actions">
+                <button class="delete-button hide" type="button">
+                  Delete Entry
+                </button>
+                <button type="submit">Save</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
       <div data-view="entries" class="hidden"></div>
     </main>
     <script src="js/data.js"></script>
