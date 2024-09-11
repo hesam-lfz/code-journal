@@ -29,6 +29,7 @@ $formElement.addEventListener('submit', (event: Event) => {
     notes: formControls.notes.value,
   };
   data.entries.unshift(newEntry);
+  writeData();
   $entryImageElement.setAttribute('src', placeholderImageSrc);
   $formElement.reset();
 });
