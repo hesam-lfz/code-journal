@@ -18,10 +18,9 @@
   <body>
     <header>
       <div class="container row">
-        <nav>
-          <ul>
-            <li><a>Entries</a></li>
-          </ul>
+        <nav class="navbar column-full">
+          <span>Code Journal</span>
+          <a href="#" data-view="entries" class="nav-item">Entries</a>
         </nav>
       </div>
     </header>
@@ -58,6 +57,12 @@
         </form>
       </div>
       <div data-view="entries" class="hidden">
+        <div class="entries-heading column-full">
+          <h1>Entries</h1>
+          <button type="button" class="new-entry-button" data-view="entry-form">
+            New
+          </button>
+        </div>
         <p id="no-entries">No entries yet!</p>
         <ul class="entry-list">
           <!--

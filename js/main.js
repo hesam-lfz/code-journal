@@ -1,7 +1,13 @@
 'use strict';
 const $formElement = document.querySelector('#entry-form');
 const $entryImageElement = document.querySelector('#entry-image');
+const $noEntriesTextElement = document.querySelector('#no-entries');
 const $entryListElement = document.querySelector('.entry-list');
+const $entriesViewElement = document.querySelector('div[data-view="entries"]');
+const $entryFormViewElement = document.querySelector(
+  'div[data-view="entry-form"]',
+);
+const $navItemElement = document.querySelector('.nav-item');
 if (
   $formElement == null ||
   $entryImageElement == null ||
@@ -29,6 +35,19 @@ $formElement.addEventListener('submit', (event) => {
   writeData();
   $entryImageElement.setAttribute('src', placeholderImageSrc);
   $formElement.reset();
+});
+document.addEventListener('DOMContentLoaded', () => {
+  for (const entry of data.entries) {
+    $entryListElement.appendChild(renderEntry(entry));
+  }
+});
+if (!$navItemElement) throw new Error('$navItem is null');
+$navItemElement.addEventListener('click', (event) => {
+  const $eventTarget = event.target;
+  const viewName = $eventTarget.dataset.view;
+  if (viewName === 'entries' || viewName === 'entry-form') {
+    viewSwap(viewName);
+  }
 });
 /*
           <li class="row">
@@ -69,8 +88,22 @@ function renderEntry(entry) {
   $entryTitle.append($editIcon);
   return $entry;
 }
-document.addEventListener('DOMContentLoaded', () => {
-  for (const entry of data.entries) {
-    $entryListElement.appendChild(renderEntry(entry));
+function toggleNoEntries() {
+  if ($noEntriesTextElement == null) throw new Error('Oops');
+  if (data.entries.length > 0) $noEntriesTextElement.classList.add('hidden');
+  else $noEntriesTextElement.classList.remove('hidden');
+}
+function viewSwap(viewName) {
+  if (!$entryFormViewElement || !$entriesViewElement) {
+    throw new Error('$entryFormView or $entriesView is null');
   }
-});
+  if (viewName === 'entries') {
+    $entriesViewElement.classList.remove('hidden');
+    $entryFormViewElement.classList.add('hidden');
+  } else if (viewName === 'entry-form') {
+    $entryFormViewElement.classList.remove('hidden');
+    $entriesViewElement.classList.add('hidden');
+  }
+  data.view = viewName;
+}
+console.log(toggleNoEntries);
