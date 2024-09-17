@@ -45,7 +45,8 @@ textarea {
   height: 130px;
 }
 
-button {
+button,
+.nav-bar-button {
   cursor: pointer;
   background-color: #562b81;
   color: white;
