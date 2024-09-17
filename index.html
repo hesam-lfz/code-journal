@@ -17,7 +17,12 @@
   </head>
   <body>
     <header>
-      <div class="container"></div>
+      <div class="container row">
+        <nav class="navbar column-full">
+          <span>Code Journal</span>
+          <a href="#" data-view="entries" class="nav-item">Entries</a>
+        </nav>
+      </div>
     </header>
     <main class="container">
       <div data-view="entry-form">
@@ -51,7 +56,29 @@
           </div>
         </form>
       </div>
-      <div data-view="entries" class="hidden"></div>
+      <div data-view="entries" class="hidden">
+        <div class="entries-heading column-full">
+          <h1>Entries</h1>
+          <a href="#" data-view="entry-form" class="nav-item nav-bar-button"
+            >New</a
+          >
+        </div>
+        <p id="no-entries">No entries yet!</p>
+        <ul class="entry-list">
+          <!--
+          <li class="row">
+            <div class="column-half">
+              <img
+                src="https://us.palaisdesthes.com/media/catalog/product/cache/17268bf11b2baf4cb4cd0cb108e37f78/2/7/2726.jpg" />
+            </div>
+            <div class="column-half">
+              <h2>Tea</h2>
+              <p>T ea</p>
+            </div>
+          </li>
+          -->
+        </ul>
+      </div>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
