@@ -83,8 +83,6 @@ function renderEntry(entry) {
   $rightColumn.className = 'column-half';
   const $entryTitle = document.createElement('h2');
   $entryTitle.textContent = entry.title;
-  // const $editIcon = document.createElement('i');
-  // $editIcon.className = 'edit fa-solid fa-pencil';
   const $entryNotes = document.createElement('p');
   $entryNotes.textContent = entry.notes;
   $entry.append($entryRow);
@@ -92,7 +90,6 @@ function renderEntry(entry) {
   $leftColumn.append($listImageWrapper);
   $listImageWrapper.append($entryImg);
   $rightColumn.append($entryTitle, $entryNotes);
-  // $entryTitle.append($editIcon);
   return $entry;
 }
 function toggleNoEntries() {
@@ -111,5 +108,8 @@ function viewSwap(viewName) {
     $entryFormViewElement.classList.remove('hidden');
     $entriesViewElement.classList.add('hidden');
   }
-  data.view = viewName;
+  if (data.view !== viewName) {
+    data.view = viewName;
+    writeData();
+  }
 }
