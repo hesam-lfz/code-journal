@@ -103,9 +103,6 @@ function renderEntry(entry: JournalEntry): HTMLLIElement {
   const $entryTitle = document.createElement('h2');
   $entryTitle.textContent = entry.title;
 
-  // const $editIcon = document.createElement('i');
-  // $editIcon.className = 'edit fa-solid fa-pencil';
-
   const $entryNotes = document.createElement('p');
   $entryNotes.textContent = entry.notes;
 
@@ -114,7 +111,6 @@ function renderEntry(entry: JournalEntry): HTMLLIElement {
   $leftColumn.append($listImageWrapper);
   $listImageWrapper.append($entryImg);
   $rightColumn.append($entryTitle, $entryNotes);
-  // $entryTitle.append($editIcon);
 
   return $entry;
 }
