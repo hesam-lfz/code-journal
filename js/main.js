@@ -56,6 +56,23 @@ for (const $navItemElement of $navItemElements) {
     }
   });
 }
+$entryListElement.addEventListener('click', (event) => {
+  const $eventTarget = event.target;
+  if ($eventTarget.tagName === 'I') {
+    const $clickedEntryElement = $eventTarget.closest('li');
+    console.log($clickedEntryElement);
+    if ($clickedEntryElement !== null) {
+      const clickedEntryId = Number($clickedEntryElement.dataset.entryId);
+      for (const entry of data.entries) {
+        if (entry.entryId === clickedEntryId) {
+          data.editing = entry;
+          viewSwap('entry-form');
+          break;
+        }
+      }
+    }
+  }
+});
 /*
           <li class="row">
             <div class="column-half">
@@ -83,6 +100,8 @@ function renderEntry(entry) {
   $rightColumn.className = 'column-half';
   const $entryTitle = document.createElement('h2');
   $entryTitle.textContent = entry.title;
+  const $editIcon = document.createElement('i');
+  $editIcon.className = 'edit fa-solid fa-pencil';
   const $entryNotes = document.createElement('p');
   $entryNotes.textContent = entry.notes;
   $entry.append($entryRow);
@@ -90,6 +109,7 @@ function renderEntry(entry) {
   $leftColumn.append($listImageWrapper);
   $listImageWrapper.append($entryImg);
   $rightColumn.append($entryTitle, $entryNotes);
+  $entryTitle.append($editIcon);
   return $entry;
 }
 function toggleNoEntries() {
