@@ -8,10 +8,12 @@ const $entryFormViewElement = document.querySelector(
   'div[data-view="entry-form"]',
 );
 const $navItemElements = document.querySelectorAll('.nav-item');
+const $newEntryHeaderElement = document.querySelector('.new-entry-header');
 if (
   $formElement == null ||
   $entryImageElement == null ||
-  $entryListElement == null
+  $entryListElement == null ||
+  $newEntryHeaderElement == null
 )
   throw new Error('Oops');
 const formControls = $formElement.elements;
@@ -25,18 +27,34 @@ $photoUrlElement.addEventListener('input', (event) => {
 });
 $formElement.addEventListener('submit', (event) => {
   event.preventDefault();
-  const newEntry = {
-    entryId: data.nextEntryId++,
+  const entryToSave = {
+    entryId: 0,
     title: formControls.title.value,
     photoUrl: formControls.photoUrl.value,
     notes: formControls.notes.value,
   };
-  data.entries.unshift(newEntry);
+  if (data.editing === null) {
+    // Adding a new entry...
+    entryToSave.entryId = data.nextEntryId++;
+    data.entries.unshift(entryToSave);
+    const $newLiElement = renderEntry(entryToSave);
+    $entryListElement.prepend($newLiElement);
+  } else {
+    // Editing an existing entry...
+    const entryItem = data.editing;
+    entryItem.title = entryToSave.title;
+    entryItem.photoUrl = entryToSave.photoUrl;
+    entryItem.notes = entryToSave.notes;
+    const $newLiElement = renderEntry(entryItem);
+    const $liEntryToReplace = document.querySelector(
+      'li[data-entry-id="' + entryItem.entryId + '"]',
+    );
+    $liEntryToReplace?.replaceWith($newLiElement);
+    data.editing = null;
+  }
   writeData();
-  $entryImageElement.setAttribute('src', placeholderImageSrc);
-  $formElement.reset();
-  $entryListElement.prepend(renderEntry(newEntry));
-  if (data.entries.length === 1) toggleNoEntries();
+  resetForm();
+  toggleNoEntries();
   viewSwap('entries');
 });
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,10 +69,40 @@ for (const $navItemElement of $navItemElements) {
   $navItemElement.addEventListener('click', (event) => {
     const $eventTarget = event.target;
     const viewName = $eventTarget.dataset.view;
-    if (viewName === 'entries' || viewName === 'entry-form') {
-      viewSwap(viewName);
-    }
+    // Clear out any prepopulated form values:
+    if (viewName === 'entry-form') resetForm();
+    if (viewName === 'entries' || viewName === 'entry-form') viewSwap(viewName);
   });
+}
+$entryListElement.addEventListener('click', (event) => {
+  const $eventTarget = event.target;
+  if ($eventTarget.tagName === 'I') {
+    const $clickedEntryElement = $eventTarget.closest('li');
+    console.log($clickedEntryElement);
+    if ($clickedEntryElement !== null) {
+      const clickedEntryId = Number($clickedEntryElement.dataset.entryId);
+      for (const entry of data.entries) {
+        if (entry.entryId === clickedEntryId) {
+          data.editing = entry;
+          prepopulateFormForEntryEdit(entry);
+          viewSwap('entry-form');
+          break;
+        }
+      }
+    }
+  }
+});
+function resetForm() {
+  $formElement.reset();
+  $entryImageElement.setAttribute('src', placeholderImageSrc);
+  $newEntryHeaderElement.textContent = 'New Entry';
+}
+function prepopulateFormForEntryEdit(entry) {
+  formControls.title.value = entry.title;
+  formControls.photoUrl.value = entry.photoUrl;
+  formControls.notes.value = entry.notes;
+  $entryImageElement.setAttribute('src', entry.photoUrl);
+  $newEntryHeaderElement.textContent = 'Edit Entry';
 }
 /*
           <li class="row">
@@ -83,6 +131,8 @@ function renderEntry(entry) {
   $rightColumn.className = 'column-half';
   const $entryTitle = document.createElement('h2');
   $entryTitle.textContent = entry.title;
+  const $editIcon = document.createElement('i');
+  $editIcon.className = 'edit fa-solid fa-pencil';
   const $entryNotes = document.createElement('p');
   $entryNotes.textContent = entry.notes;
   $entry.append($entryRow);
@@ -90,6 +140,7 @@ function renderEntry(entry) {
   $leftColumn.append($listImageWrapper);
   $listImageWrapper.append($entryImg);
   $rightColumn.append($entryTitle, $entryNotes);
+  $entryTitle.append($editIcon);
   return $entry;
 }
 function toggleNoEntries() {
