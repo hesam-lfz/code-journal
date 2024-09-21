@@ -42,14 +42,25 @@ $formElement.addEventListener('submit', (event) => {
   } else {
     // Editing an existing entry...
     const entryItem = data.editing;
-    entryItem.title = entryToSave.title;
-    entryItem.photoUrl = entryToSave.photoUrl;
-    entryItem.notes = entryToSave.notes;
-    const $newLiElement = renderEntry(entryItem);
-    const $liEntryToReplace = document.querySelector(
-      'li[data-entry-id="' + entryItem.entryId + '"]',
-    );
-    $liEntryToReplace?.replaceWith($newLiElement);
+    const entryId = entryItem.entryId;
+    entryToSave.entryId = entryId;
+    let entryIndex = -1;
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === entryId) {
+        entryIndex = i;
+        break;
+      }
+    }
+    if (entryIndex >= 0) {
+      data.entries[entryIndex] = entryToSave;
+      const $newLiElement = renderEntry(entryToSave);
+      const $liEntryToReplace = document.querySelector(
+        'li[data-entry-id="' + entryId + '"]',
+      );
+      $liEntryToReplace?.replaceWith($newLiElement);
+    } else {
+      throw new Error('Entry to edit was not found!');
+    }
     data.editing = null;
   }
   writeData();
@@ -78,7 +89,6 @@ $entryListElement.addEventListener('click', (event) => {
   const $eventTarget = event.target;
   if ($eventTarget.tagName === 'I') {
     const $clickedEntryElement = $eventTarget.closest('li');
-    console.log($clickedEntryElement);
     if ($clickedEntryElement !== null) {
       const clickedEntryId = Number($clickedEntryElement.dataset.entryId);
       for (const entry of data.entries) {
