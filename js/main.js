@@ -9,11 +9,13 @@ const $entryFormViewElement = document.querySelector(
 );
 const $navItemElements = document.querySelectorAll('.nav-item');
 const $newEntryHeaderElement = document.querySelector('.new-entry-header');
+const $deleteButtonElement = document.querySelector('.delete-button');
 if (
   $formElement == null ||
   $entryImageElement == null ||
   $entryListElement == null ||
-  $newEntryHeaderElement == null
+  $newEntryHeaderElement == null ||
+  $deleteButtonElement == null
 )
   throw new Error('Oops');
 const formControls = $formElement.elements;
@@ -106,6 +108,7 @@ function resetForm() {
   $formElement.reset();
   $entryImageElement.setAttribute('src', placeholderImageSrc);
   $newEntryHeaderElement.textContent = 'New Entry';
+  $deleteButtonElement?.classList.add('hide');
 }
 function prepopulateFormForEntryEdit(entry) {
   formControls.title.value = entry.title;
@@ -113,6 +116,7 @@ function prepopulateFormForEntryEdit(entry) {
   formControls.notes.value = entry.notes;
   $entryImageElement.setAttribute('src', entry.photoUrl);
   $newEntryHeaderElement.textContent = 'Edit Entry';
+  $deleteButtonElement?.classList.remove('hide');
 }
 /*
           <li class="row">
