@@ -107,9 +107,10 @@ dialog::backdrop {
 
 .form-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
+/*
 .form-actions button:first-child {
   color: red;
   text-decoration: underline;
@@ -117,7 +118,7 @@ dialog::backdrop {
   padding: 0;
   text-transform: none;
 }
-
+*/
 .modal-actions {
   display: flex;
   justify-content: space-between;
