@@ -9,11 +9,19 @@ const $entryFormViewElement = document.querySelector(
 );
 const $navItemElements = document.querySelectorAll('.nav-item');
 const $newEntryHeaderElement = document.querySelector('.new-entry-header');
+const $deleteButtonElement = document.querySelector('.delete-button');
+const $modalElement = document.querySelector('dialog');
+const $cancelModalElement = document.querySelector('.cancel-modal');
+const $confirmModalElement = document.querySelector('.confirm-modal');
 if (
   $formElement == null ||
   $entryImageElement == null ||
   $entryListElement == null ||
-  $newEntryHeaderElement == null
+  $newEntryHeaderElement == null ||
+  $deleteButtonElement == null ||
+  $modalElement == null ||
+  $cancelModalElement == null ||
+  $confirmModalElement == null
 )
   throw new Error('Oops');
 const formControls = $formElement.elements;
@@ -44,6 +52,7 @@ $formElement.addEventListener('submit', (event) => {
     const entryItem = data.editing;
     const entryId = entryItem.entryId;
     entryToSave.entryId = entryId;
+    // find index of entry in the data.entries array to edit:
     let entryIndex = -1;
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryId === entryId) {
@@ -102,10 +111,45 @@ $entryListElement.addEventListener('click', (event) => {
     }
   }
 });
+$deleteButtonElement.addEventListener('click', () => {
+  $modalElement.showModal();
+});
+$cancelModalElement.addEventListener('click', () => {
+  $modalElement.close();
+});
+$confirmModalElement.addEventListener('click', () => {
+  if (data.editing === null) return;
+  const entryItem = data.editing;
+  const entryId = entryItem.entryId;
+  // find index of entry in the data.entries array to remove:
+  let entryIndex = -1;
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === entryId) {
+      entryIndex = i;
+      break;
+    }
+  }
+  if (entryIndex >= 0) {
+    data.entries.splice(entryIndex, 1);
+    const $liEntryToRemove = document.querySelector(
+      'li[data-entry-id="' + entryId + '"]',
+    );
+    $liEntryToRemove?.remove();
+    data.editing = null;
+    writeData();
+    resetForm();
+    $modalElement.close();
+    toggleNoEntries();
+    viewSwap('entries');
+  } else {
+    throw new Error('Did not find the entry!');
+  }
+});
 function resetForm() {
   $formElement.reset();
   $entryImageElement.setAttribute('src', placeholderImageSrc);
   $newEntryHeaderElement.textContent = 'New Entry';
+  $deleteButtonElement?.classList.add('hide');
 }
 function prepopulateFormForEntryEdit(entry) {
   formControls.title.value = entry.title;
@@ -113,6 +157,7 @@ function prepopulateFormForEntryEdit(entry) {
   formControls.notes.value = entry.notes;
   $entryImageElement.setAttribute('src', entry.photoUrl);
   $newEntryHeaderElement.textContent = 'Edit Entry';
+  $deleteButtonElement?.classList.remove('hide');
 }
 /*
           <li class="row">
