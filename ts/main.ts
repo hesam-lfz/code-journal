@@ -23,17 +23,18 @@ const $modalElement = document.querySelector('dialog');
 const $cancelModalElement = document.querySelector('.cancel-modal');
 const $confirmModalElement = document.querySelector('.confirm-modal');
 
-if (
-  $formElement == null ||
-  $entryImageElement == null ||
-  $entryListElement == null ||
-  $newEntryHeaderElement == null ||
-  $deleteButtonElement == null ||
-  $modalElement == null ||
-  $cancelModalElement == null ||
-  $confirmModalElement == null
-)
-  throw new Error('Oops');
+if ($formElement == null) throw new Error('Oops no $formElement');
+if ($entryImageElement == null) throw new Error('Oops no $entryImageElement');
+if ($entryListElement == null) throw new Error('Oops no $entryListElement');
+if ($newEntryHeaderElement == null)
+  throw new Error('Oops no $newEntryHeaderElement');
+if ($deleteButtonElement == null)
+  throw new Error('Oops no $deleteButtonElement');
+if ($modalElement == null) throw new Error('Oops no $modalElement');
+if ($cancelModalElement == null) throw new Error('Oops no $cancelModalElement');
+if ($confirmModalElement == null)
+  throw new Error('Oops no $confirmModalElement');
+
 const formControls = $formElement.elements as FormElements;
 const $photoUrlElement = formControls.photoUrl;
 const placeholderImageSrc = $entryImageElement.getAttribute('src') || '';
