@@ -17,75 +17,11 @@
   </head>
   <body>
     <header>
-      <div class="container row">
-        <nav class="navbar column-full">
-          <span>Code Journal</span>
-          <a href="#" data-view="entries" class="nav-item">Entries</a>
-        </nav>
-      </div>
+      <div class="container"></div>
     </header>
     <main class="container">
-      <div data-view="entry-form">
-        <form id="entry-form">
-          <div class="column-full">
-            <h1 class="new-entry-header">New Entry</h1>
-          </div>
-          <div class="row">
-            <div class="photo-wrapper column-half">
-              <img
-                id="entry-image"
-                src="images/placeholder-image-square.jpg"
-                alt="Placeholder image" />
-            </div>
-            <div class="column-half">
-              <label for="title">Title</label>
-              <input id="title" type="text" name="title" required />
-              <label for="photo-url">Photo U R L</label>
-              <input id="photo-url" type="url" name="photoUrl" required />
-            </div>
-            <div class="column-full">
-              <label for="notes">Notes</label>
-              <textarea name="notes" id="notes" required></textarea>
-              <div class="form-actions">
-                <button class="delete-button hide" type="button">
-                  Delete Entry
-                </button>
-                <button type="submit">Save</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div data-view="entries" class="hidden">
-        <div class="entries-heading column-full">
-          <h1>Entries</h1>
-          <a href="#" data-view="entry-form" class="nav-item nav-bar-button"
-            >New</a
-          >
-        </div>
-        <p id="no-entries">No entries yet!</p>
-        <ul class="entry-list">
-          <!--
-          <li class="row">
-            <div class="column-half">
-              <img
-                src="https://us.palaisdesthes.com/media/catalog/product/cache/17268bf11b2baf4cb4cd0cb108e37f78/2/7/2726.jpg" />
-            </div>
-            <div class="column-half">
-              <h2>Tea</h2>
-              <p>T ea</p>
-            </div>
-          </li>
-          - -->
-        </ul>
-      </div>
-      <dialog>
-        <p><strong>Are you sure you want to delete this entry?</strong></p>
-        <div class="modal-actions">
-          <button class="cancel-modal">CANCEL</button>
-          <button class="confirm-modal">CONFIRM</button>
-        </div>
-      </dialog>
+      <div data-view="entry-form"></div>
+      <div data-view="entries" class="hidden"></div>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
