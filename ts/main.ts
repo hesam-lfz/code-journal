@@ -55,7 +55,7 @@ $formElement.addEventListener('submit', (event: Event) => {
     notes: formControls.notes.value,
   };
   if (data.editing === null) {
-    // Adding a new entry...
+    // Adding a new entry...:
     entryToSave.entryId = data.nextEntryId++;
     data.entries.unshift(entryToSave);
     const $newLiElement = renderEntry(entryToSave);
