@@ -47,14 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
   viewSwap(data.view);
 });
 if (!$navItemElements) throw new Error('$navItem is null');
-for (const $navItemElement of $navItemElements) {
-  $navItemElement.addEventListener('click', (event) => {
-    const $eventTarget = event.target;
-    const viewName = $eventTarget.dataset.view;
-    if (viewName === 'entries' || viewName === 'entry-form') {
-      viewSwap(viewName);
-    }
-  });
+for (let i = 0; i < $navItemElements.length; i++)
+  $navItemElements[i].addEventListener('click', navItemOnClick);
+function navItemOnClick(event) {
+  const $eventTarget = event.target;
+  const viewName = $eventTarget.dataset.view;
+  if (viewName === 'entries' || viewName === 'entry-form') viewSwap(viewName);
 }
 /*
           <li class="row">

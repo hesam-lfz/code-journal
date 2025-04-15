@@ -59,16 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 if (!$navItemElements) throw new Error('$navItem is null');
-for (const $navItemElement of $navItemElements) {
-  $navItemElement.addEventListener('click', (event: Event) => {
-    const $eventTarget = event.target as HTMLElement;
-    const viewName = $eventTarget.dataset.view;
-    if (viewName === 'entries' || viewName === 'entry-form') {
-      viewSwap(viewName);
-    }
-  });
-}
+for (let i = 0; i < $navItemElements.length; i++)
+  $navItemElements[i].addEventListener('click', navItemOnClick);
 
+function navItemOnClick(event: Event): void {
+  const $eventTarget = event.target as HTMLElement;
+  const viewName = $eventTarget.dataset.view;
+  if (viewName === 'entries' || viewName === 'entry-form') viewSwap(viewName);
+}
 /*
           <li class="row">
             <div class="column-half">
